@@ -1,17 +1,25 @@
 const core = require('@actions/core');
 const { GitHub, context } = require('@actions/github')
 
+function getSha() {
+    if (context.eventName == 'pull_request') {
+        return context.payload.after;
+    }
+
+    return context.sha;
+}
+
 async function run() {
     try {
         console.log(JSON.stringify(context, null, 4));
 
         const token = core.getInput('github-token');
-
+        
         const github = new GitHub(token)
         const response = await github.checks.listSuitesForRef({
             owner: context.repo.owner,
             repo: context.repo.repo,
-            ref: context.sha,
+            ref: getSha(),
             app_id: 15368
         });
 
