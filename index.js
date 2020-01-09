@@ -11,21 +11,22 @@ function getSha() {
 
 async function run() {
     try {
-        console.log(JSON.stringify(context, null, 4));
-
         const token = core.getInput('github-token');
-        
+
+        const sha = getSha();
+
         const github = new GitHub(token)
         const response = await github.checks.listSuitesForRef({
             owner: context.repo.owner,
             repo: context.repo.repo,
-            ref: getSha(),
+            ref: sha,
             app_id: 15368
         });
 
-        console.log(JSON.stringify(response, null, 4));
+        const checkSuiteId = response.data.check_suites[0].id;
 
-        core.exportVariable('CHECK_SUITE_ID', response.data.check_suites[0].id)
+        core.exportVariable('CHECK_SUITE_ID', checkSuiteId);
+        core.exportVariable('CHECK_SUITE_URL', `https://github.com/${context.repo.owner}/${context.repo.repo}/commit/${sha}/checks?check_suite_id=${checkSuiteId}`);
     } catch (error) {
         core.setFailed(error.message);
     }
