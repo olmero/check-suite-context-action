@@ -3,7 +3,8 @@ const { GitHub, context } = require('@actions/github')
 
 async function run() {
     try {
-        console.log('token' + process.env.GITHUB_TOKEN);
+        console.log(JSON.stringify(context, null, 4));
+        console.log('token ' + process.env.GITHUB_TOKEN);
 
         const github = new GitHub(process.env.GITHUB_TOKEN)
         const response = await github.checks.listSuitesForRef({
