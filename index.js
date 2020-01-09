@@ -2,7 +2,7 @@ const core = require('@actions/core');
 const { GitHub, context } = require('@actions/github')
 
 const github = new GitHub(process.env.GITHUB_TOKEN)
-const response = await github.checks.listSuitesForRef({
+const response = github.checks.listSuitesForRef({
     owner: context.repo.owner,
     repo: context.repo.repo,
     ref: context.sha,
