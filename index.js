@@ -5,6 +5,8 @@ async function run() {
     try {
         const token = core.getInput('github-token');
 
+        console.log('token ' + token);
+
         const github = new GitHub(token)
         const response = await github.checks.listSuitesForRef({
             owner: context.repo.owner,
