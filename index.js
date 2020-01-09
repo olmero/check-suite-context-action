@@ -3,9 +3,9 @@ const { GitHub, context } = require('@actions/github')
 
 async function run() {
     try {
-        const token = core.getInput('github-token');
+        console.log(JSON.stringify(context, null, 4));
 
-        console.log('token ' + token);
+        const token = core.getInput('github-token');
 
         const github = new GitHub(token)
         const response = await github.checks.listSuitesForRef({
