@@ -3,13 +3,13 @@ const { GitHub, context } = require('@actions/github')
 
 async function run() {
     try {
-        console.log(JSON.stringify(context, null, 4));
-        console.log('token ' + process.env.GITHUB_TOKEN);
+        const token = core.getInput('github-token');
+        const repo =  core.getInput('github-token');
 
-        const github = new GitHub(process.env.GITHUB_TOKEN)
+        const github = new GitHub(token)
         const response = await github.checks.listSuitesForRef({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
+            owner: repo.owner,
+            repo: repo.repo,
             ref: context.sha,
             app_id: 15368
         });

@@ -1,5 +1,12 @@
 name: 'check-suite'
 description: 'Sets the CHECK_SUITE_ID env variable'
+inputs:
+  github-token:
+    description: 'The Token to use for the GitHub API'
+    required: true
+  repo:
+    description: 'the context.repo object'
+    required: true
 runs:
   using: 'node12'
   main: 'index.js'
